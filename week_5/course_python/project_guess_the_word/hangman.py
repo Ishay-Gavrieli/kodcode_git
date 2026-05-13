@@ -35,6 +35,8 @@ def get_valid_guess(already_guess: list):
                 print("You already guessed that letter.")
                 continue
             return user_guess
+        print("you can only type letters please try again")
+        continue
 
 def update_hidden_word(user_guess, secret_word, hidden_word):
     found = False
