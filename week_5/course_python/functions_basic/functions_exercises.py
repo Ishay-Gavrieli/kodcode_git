@@ -1,0 +1,229 @@
+# question 1
+
+def is_even(n:int) -> bool:
+    return n % 2 == 0
+
+    
+
+# question 2
+
+def factorial(n:int) -> int:
+    result = 1 
+    for i in range(1 , n + 1):
+        result *= i
+
+    return result
+    
+
+# question 3
+
+VOWELS = ["a","e","u","o","i"]
+
+def count_vowels(s:str) -> int:
+   
+    return sum([1 for i in s.lower() if i in VOWELS ])
+     
+
+# question 4
+#1
+
+def reverse_string(s:str) -> str:
+    result = ''
+    for i in reversed(s):
+        result += i
+    return result
+
+# #2
+def reverse_string(s:str) -> str:
+    return "".join([c for c in reversed(s)])
+
+
+# question 5
+
+def find_max(lst:list) -> int:
+    highest  = lst[0]
+    for n in lst:
+        if n > highest:
+            highest = n
+    return highest
+
+
+# question 6
+
+def celsius_to_fahrenheit(c:float) -> float:
+    return  (c * 1.38) + 32
+
+
+# question 7
+
+def is_palindrome(s:str) -> bool:
+    for i in range(len(s)//2):
+            if s[i] != s[len(s)-i -1]:
+                  return False
+            
+    return True
+                  
+                  
+# question 8
+
+def even_list(lst:list) -> list :
+    return [n for n in lst if n % 2 == 0]
+
+
+                  
+# question 9
+
+def is_anagrams(s1:str,s2:str) -> bool:
+    new_str1 = sorted(s1)
+    new_str2 = sorted(s2)
+    if len(new_str2) != len(new_str1):
+        return False
+    for i in range(len(new_str2)):
+        if new_str1[i] != new_str2[i]:
+            return False
+        
+    return True
+
+
+# question 10
+# 1
+def count_words(s:str) -> dict:
+    sentence = s.lower().split()
+    dic = dict()
+    for w in sentence:
+        if w in dic:
+            dic[w] += 1
+        else:
+            dic[w] = 1
+    return dic
+
+# 2
+from collections import Counter
+def count_words(s:str) -> dict:
+    sentence = s.lower().split()
+    return dict(Counter(sentence))
+
+
+
+# question 11
+
+def calculate_resource_drain(cost,waste_factor):
+    return cost * waste_factor
+
+def get_net_resources(cost, waste_factor):
+    return cost - calculate_resource_drain(cost,waste_factor)
+
+
+# question 12
+
+def intercept_lenght(packet):
+    return len(packet.encode("utf-8"))
+
+def verify_transmission(packet):
+    data = intercept_lenght(packet)
+    return f"Intercepted packet contains {data} bytes of data."
+
+
+# question 13
+
+import math
+
+def convert_to_decibels(signal_strenght):
+    return 20 * math.log10 *(signal_strenght/1)
+
+def is_threat_detected(signal_strenght):
+    return  convert_to_decibels(signal_strenght) > 90 
+
+
+# question 14
+
+def get_fuel_surcharge(distance):
+
+    fuel_consumption_rate = 10  
+    price_per_liter = 8      
+    tax_rate = 0.17            
+    
+    total_fuel_cost = (distance / fuel_consumption_rate) * price_per_liter
+    return total_fuel_cost * tax_rate
+
+def get_hazard_pay(distance):
+    hazard_rate = 0.05 
+    return distance * hazard_rate
+
+def calculate_mission_cost(distance):
+    base_deployment_cost = 500
+    
+    fuel_surcharge = get_fuel_surcharge(distance)
+    hazard_pay = get_hazard_pay(distance)
+    
+    total_budget = base_deployment_cost + fuel_surcharge + hazard_pay
+    return round(total_budget, 2)
+
+
+
+# question 15
+
+def sum_digits(n):
+    total = 0
+    while n > 0:
+        total += n % 10
+        n //= 10
+    return total
+
+def digital_root(n):
+    num = sum_digits(n)
+    while num >= 10:
+        num = sum_digits(num)
+    return num
+
+
+    
+# question 16
+
+def count_digits(n):
+    count = 0
+    while n > 0:
+        n = n // 10
+        count += 1
+
+    return count 
+
+
+    
+# question 17
+
+def move_zero(lst:list):
+    for i in lst:
+        if i == 0:
+            lst.remove(i)
+            lst.append(0)
+    return lst
+
+
+# question 18
+
+def calculation(lst:list):
+    sum_n = sum([i for i in lst])
+    max_n = max([i for i in lst])
+    min_n = min([i for i in lst])
+    average_n = sum_n / len(lst)
+    return sum_n,max_n,min_n,average_n
+
+
+# question 19
+
+def revers(lst:list):
+    result = []
+    for i in range(1 , len(lst) + 1):
+        result.append(lst[-i])
+    return result
+
+
+# question 20
+
+def without_duplicates(lst:list):
+    result = []
+    for i in lst:
+        if i not in result:
+            result.append(i)
+    return result
