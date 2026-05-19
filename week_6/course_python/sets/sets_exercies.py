@@ -77,7 +77,8 @@ def pair_sum_exists(user_lst,target):
     new = set(user_lst)
     for i in user_lst:
         for j in user_lst:
-            return i + j == target
+            if i + j == target:
+                return True
     return False
 
 
