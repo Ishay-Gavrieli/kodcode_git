@@ -112,5 +112,6 @@ def most_frequent_value(dic):
     new_dic = dict()
     for value in dic.values():
         new_dic[value] = new_dic.get(value,0)+1
-    
-    return max(new_dic.items())[1]
+        
+    return max(new_dic.items(), key=lambda item: item[1])[0]
+  
