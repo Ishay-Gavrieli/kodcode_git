@@ -93,25 +93,24 @@ def common_keys(dic1,dic2):
 
 
 # question 10
-# def most_frequent_value(dic):
-#     new_dic = dict()
-#     for value in dic.values():
-#         new_dic[value] = new_dic.get(value,0)+1
-
-
-#     max_value = float("-inf")
-#     for key,value in new_dic.items():
-#         if value > max_value:
-#             max_value = value
-#             max_key = key
-#     return max_key
-
-
+# 1
 def most_frequent_value(dic):
     new_dic = dict()
     for value in dic.values():
         new_dic[value] = new_dic.get(value,0)+1
-    print(new_dic)
-    return max(new_dic.items())[1]
 
-print(most_frequent_value({"a": 1, "b": 2, "c": 1, "d": 3, "e": 1}))
+
+    max_value = float("-inf")
+    for key,value in new_dic.items():
+        if value > max_value:
+            max_value = value
+            max_key = key
+    return max_key
+
+# 2
+def most_frequent_value(dic):
+    new_dic = dict()
+    for value in dic.values():
+        new_dic[value] = new_dic.get(value,0)+1
+    
+    return max(new_dic.items())[1]
