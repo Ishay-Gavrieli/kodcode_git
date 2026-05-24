@@ -36,15 +36,20 @@ def removed_duplicates(lst):
 
 # question 6
 def second_largest(lst):
-    first_l = lst[0]
-    second_l = lst[0]
+    if len(lst) < 2:
+        return None 
+    
+    first_l = float('-inf')
+    second_l = float('-inf')
+
     for i in lst:
-        if i >= first_l:
+        if i > first_l:
+            second_l = first_l
             first_l = i
-        else:
-            if i > second_l:
-                second_l = i
-    return second_l if second_l < first_l else None
+        elif i > second_l and i != first_l:
+            second_l = i
+
+    return second_l if second_l != float('-inf') else None
 
 
 # question 7
@@ -83,6 +88,7 @@ def rotate_list(lst, k):
     part2 = lst[:-k]  
     
     return part1 + part2
+
 
 
 
