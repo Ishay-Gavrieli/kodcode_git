@@ -25,8 +25,6 @@ def calculate_averages(filename):
     with open(filename, "r", encoding="utf-8") as file:
         for line_num, line in enumerate(file, 1):
             line = line.strip()
-            if not line: 
-                continue
             
             parts = line.split(",")
             name = parts[0].strip()
@@ -45,7 +43,9 @@ def calculate_averages(filename):
 
                 if len(grades) == 0:
                     raise ValueError("No valid numerical grades found")
-                
+
+                averages[name] = sum(grades) // len(grades)
+
             except ValueError:
                 print(f"Warning: Corrupted data on line {line_num}. Skipping.")
                 continue
@@ -58,8 +58,6 @@ def calculate_averages(filename):
 
 
 def save_results(averages, output_filename):
-    if not averages:
-        return
 
     sorted_averages = sorted(averages.items(), key=lambda item: item[1], reverse=True)
     
