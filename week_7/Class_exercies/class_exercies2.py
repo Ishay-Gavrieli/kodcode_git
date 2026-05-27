@@ -8,9 +8,7 @@ class Student:
     def name(self):
         return self._name
     
-    
-# a = Student("ishay")
-# print(a.name)
+ 
 
 
 # question 2
@@ -24,9 +22,6 @@ class Rectangle:
         return self._width * self._height
     
     
-# a = Rectangle(3,4)
-# print(a.erea)
-
 
 # question 3
 
@@ -44,11 +39,7 @@ class Thermometer:
             raise ValueError
         self._celsius = value
 
-# t  = Thermometer(25)
-# print(t.celsius)
 
-# t.celsius = -2000
-# print(t.celsius)
 
 
 # question 4
@@ -75,11 +66,6 @@ class BankAccount:
         self._balance -= amount
         return f"Withdrew {amount}. Remaining balance: {self._balance}"
 
-# a = BankAccount(214)
-# print(a.balance)
-# a.deposit(5)
-
-# print(a.balance)
 
 
 # question 5
@@ -93,9 +79,6 @@ class Person:
     def full_name(self):
         return f"{self._first_name} {self._last_name}"
 
-
-# a = Person("ishay","gavrieli")
-# print(a.full_name)
 
 
 # question 6
@@ -123,11 +106,6 @@ class Calculator:
     def is_even(n):
         return n % 2 == 0
     
-# a = Calculator
-# print(a.is_even(4))
-
-# print(Calculator.is_even(5))
-
 
 
 # question 8
@@ -145,8 +123,6 @@ class Point:
 
 p = Point.from_tuple((5, 9))
 
-# print(p.x)  
-# print(p.y)
 
 # question 9
 
@@ -159,15 +135,9 @@ class User:
         User._count += 1
 
     @classmethod
-    def hoe_many(cls):
+    def how_many(cls):
         return cls._count
     
-print(User.how_many())
-
-u1 = User("Ishay")
-u2 = User("Dana")
-u3 = User("Yossi")
-print(User.how_many())
 
 # question 10
 
@@ -191,9 +161,5 @@ class Product:
     
         self._price = value
 
-p = Product("Laptop", 1500)
-print(f"item: {p.name}, price: {p.price}")
 
-p.price = 1350
-print(p.price)
 
