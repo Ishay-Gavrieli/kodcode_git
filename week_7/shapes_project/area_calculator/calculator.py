@@ -12,4 +12,12 @@ class Shape:
     
     def __str__(self):
         return f"Shape (Area: {self.area}, Perimeter: {self.perimeter})"
+    
+    def __repr__(self):
+        return self.__str__() 
+
+
+
+
+
 
