@@ -6,8 +6,7 @@ class Animal:
 class Dog(Animal):
     def speak():
         return "woof"
-    
-
+  
 # question 2
 
 class Vehicle:
@@ -16,6 +15,7 @@ class Vehicle:
     
 class Car(Vehicle):
     pass
+
 
 
 # question 3
@@ -27,8 +27,8 @@ class Student(Person):
     def __init__(self, name,school):
         super().__init__(name)
         self.school = school
+ 
 
-    
 # question 4
 
 class Logger:
@@ -85,13 +85,6 @@ class Duck:
     
 def make_them_speak(animals):
     return [animal.speak() for animal in animals]
-
-# my_cat = Cat()
-# my_duck = Duck()
-
-# animal_list = [my_cat, my_duck]
-
-# print(make_them_speak(animal_list))
 
 
 # question 7
