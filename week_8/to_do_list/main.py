@@ -27,6 +27,7 @@ if __name__ == "__main__":
     uvicorn.run("main:app", host="127.0.0.1", port=PORT, reload=True)
 
 
+# question 
 
 from fastapi import FastAPI
 import uvicorn
@@ -38,6 +39,7 @@ def read_root():
     return {"message": "Hello from my first API server this is sunday!",
             "my_name": "ishay"} 
 
+# question 
 
 
 from fastapi import FastAPI
@@ -57,18 +59,20 @@ if __name__ == "__main__":
     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
 
 
+# question 
 
 from fastapi import FastAPI
 import uvicorn
 
 app = FastAPI()
 
-# 1. FIXED ORDER: Static/Specific route goes FIRST
+
+
 @app.get("/items/count")
 def count_items():
     return {"count": 42, "description": "This is the total number of items."}
 
-# 2. Dynamic/Parameter route goes SECOND
+
 @app.get("/items/{item_id}")
 def get_item(item_id: int):
     return {"item_id": item_id, "name": f"Item number {item_id}"}
@@ -76,7 +80,7 @@ def get_item(item_id: int):
 if __name__ == "__main__":
     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
 
-
+# question 
 
 from fastapi import FastAPI
 import uvicorn
@@ -108,6 +112,7 @@ def greet(name: str):
 if __name__ == "__main__":
     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
 
+
 # question 2
 
 from fastapi import FastAPI
@@ -116,9 +121,9 @@ import uvicorn
 app = FastAPI()
 
 
-USERS_DB = {
-    "1": {"user_id": 1, "name": "Alice", "email": "alice@example.com"},
-    "2": {"user_id": 2, "name": "Bob", "email": "bob@example.com"},
+data = {
+    "1": {"user_id": 1, "name": "Alice", "email": "alice@gmail.com"},
+    "2": {"user_id": 2, "name": "David", "email": "bob@gmail.com"},
 }
 
 @app.get("/")
@@ -131,7 +136,7 @@ def get_admin():
 
 @app.get("/users/{user_id}")
 def get_user_by_id(user_id: str):
-    return USERS_DB.get(user_id)
+    return data.get(user_id)
 
 
 if __name__ == "__main__":
@@ -177,13 +182,13 @@ from datetime import datetime
 
 app = FastAPI()
 
-SERVER_NAME = "production-omega-01"
+server_name = "production-omega-01"
 
 @app.get("/status")
 def get_system_status():
     current_time = datetime.now()
 
-    return {"server_name": SERVER_NAME, "timestamp": current_time}
+    return {"server_name": server_name, "timestamp": current_time}
 
 
 if __name__ == "__main__":
