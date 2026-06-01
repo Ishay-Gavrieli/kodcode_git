@@ -1,95 +1,66 @@
-import os
-from fastapi import FastAPI
-from dotenv import load_dotenv
-import uvicorn
-
-load_dotenv()
-PORT = int(os.environ.get("PORT", 8000)) 
-
-
-app = FastAPI(title="My To-Do List API")
-
-
-todo_tasks = [
-    {"id": 1, "task": "Set up project directory and venv", "completed": True},
-    {"id": 2, "task": "Install requirements via pip", "completed": True},
-    {"id": 3, "task": "Run the FastAPI server successfully", "completed": False}
-]
-
-
-@app.get("/")
-def read_root():
-    return {"status": "Success", "data": todo_tasks}
-
-
-if __name__ == "__main__":
-    print(f"Launching server on port {PORT}...")
-    uvicorn.run("main:app", host="127.0.0.1", port=PORT, reload=True)
-
-
-# question 
-
-from fastapi import FastAPI
-import uvicorn
-
-app = FastAPI() 
-
-@app.get("/") 
-def read_root():
-    return {"message": "Hello from my first API server this is sunday!",
-            "my_name": "ishay"} 
-
-# question 
-
-
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException, status
+from pydantic import BaseModel
 import uvicorn
 
 app = FastAPI()
 
-@app.get("/")
-def read_root():
-    return {"message": "Hello, world"}
+items_db = {
+    1: {"name": "Wireless Mouse", "price": 29.99},
+    2: {"name": "Mechanical Keyboard", "price": 79.99}
+}
 
-@app.get("/items/{item_id}")
-def get_item(item_id: int):
-    return {"item_id": item_id, "name": f"Item number {item_id}"}
-
-if __name__ == "__main__":
-    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
+class Item(BaseModel):
+    name: str
+    price: float
 
 
-# question 
-
-from fastapi import FastAPI
-import uvicorn
-
-app = FastAPI()
-
-
-
-@app.get("/items/count")
-def count_items():
-    return {"count": 42, "description": "This is the total number of items."}
+@app.get("/items")
+def read_all_items():
+    return items_db
 
 
 @app.get("/items/{item_id}")
-def get_item(item_id: int):
-    return {"item_id": item_id, "name": f"Item number {item_id}"}
+def read_item(item_id: int):
+    if item_id not in items_db:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, 
+            detail=f"Item with ID {item_id} does not exist"
+        )
+    return items_db[item_id]
 
-if __name__ == "__main__":
-    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
 
-# question 
+@app.post("/items")
+def create_item(item_id: int, item: Item):
+    if item_id in items_db:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, 
+            detail=f"Item with ID {item_id} already exists"
+        )
+    items_db[item_id] = item.model_dump()
+    return {"message": "Item successfully created", "data": items_db[item_id]}
 
-from fastapi import FastAPI
-import uvicorn
 
-app = FastAPI()
+@app.put("/items/{item_id}")
+def update_item(item_id: int, item: Item):
+    if item_id not in items_db:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, 
+            detail=f"Item with ID {item_id} not found to update"
+        )
+    items_db[item_id] = item.model_dump()
+    return {"message": "Item successfully updated", "data": items_db[item_id]}
 
-@app.get("/items/{item_id}")
-def get_item(item_id: int):
-    return {"item_id": item_id, "name": f"Item number {item_id}"}
+
+@app.delete("/items/{item_id}")
+def delete_item(item_id: int):
+    if item_id not in items_db:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, 
+            detail=f"Item with ID {item_id} not found to delete"
+        )
+    del items_db[item_id]
+    return {"message": f"Item {item_id} has been successfully deleted"}
+
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
