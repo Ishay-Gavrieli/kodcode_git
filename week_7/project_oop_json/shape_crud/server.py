@@ -66,6 +66,22 @@ def sum_of_all_shapes():
 
 
 
+
+@app.get("/shapes/count")
+def total_shapes():
+    return len(shapeManager.shapes)
+
+
+@app.get("/shapes/type/{type}")
+def shape_type(type:str):
+    lst = []
+    shapes = shapeManager.get_all_shapes()
+    for shape in shapes:
+        lst.append(shape.shape_type)
+    
+    return lst
+
+
 @app.get("/shapes/{id}")
 def shape_by_id(id:int):
     for shape in shapeManager.shapes:
@@ -74,21 +90,6 @@ def shape_by_id(id:int):
         
     raise HTTPException(status_code=404,detail="the shape not found")
 
-
-
-# @app.get("/shapes/count")
-# def total_shapes():
-#     return len(shapeManager.get_all_shapes())
-
-
-# @app.get("/shapes/type/{type}")
-# def shape_type(type:str):
-#     lst = []
-#     shapes = shapeManager.get_all_shapes()
-#     for shape in shapes:
-#         lst.append(shape.shape_type)
-    
-#     return lst
 
 
 
