@@ -15,7 +15,7 @@ shapeManager = ShapeManager()
 
 @app.get("/shapes")
 def get_all_shapes():
-    return shapeManager.get_all_shapes()
+    return [shape.to_dict() for shape in shapeManager.get_all_shapes()]
    
 
 
@@ -38,6 +38,39 @@ def create_new_shape(shape:dict):
     return {"success":True}
 
 
+@app.get("/shapes/total-area")
+def sum_of_all_shapes():
+
+    shapes = shapeManager.get_all_shapes()
+
+    if not shapes:
+        raise HTTPException(status_code=404 , detail="there are not shapes")
+
+    return sum(shape.get_area() for shape in shapes)
+
+
+@app.get("/shapes/count")
+def total_shapes():
+    return len(shapeManager.shapes)
+
+
+
+@app.get("/shapes/type/{type}")
+def shape_type(type:str):
+    shapes = shapeManager.get_all_shapes()
+    return [shape.to_dict() for shape in shapes if shape.shape_type == type]
+
+
+@app.get("/shapes/{id}")
+def shape_by_id(id:int):
+    for shape in shapeManager.shapes:
+        if shape.id == id:
+            return shape.to_dict()
+        
+    raise HTTPException(status_code=404,detail="the shape not found")
+
+
+
 @app.put("/shapes/{id}")
 def replace_shape(id:int,shape:dict):
     succes = shapeManager.update_shape(id,shape)
@@ -54,41 +87,9 @@ def delete_shape(id:int):
         
     return {"success": True}
 
-@app.get("/shapes/total-area")
-def sum_of_all_shapes():
-
-    shapes = shapeManager.get_all_shapes()
-
-    if not shapes:
-        raise HTTPException(status_code=404 , detail="there are not shapes")
-
-    return sum(shape.get_area() for shape in shapes)
 
 
 
-
-@app.get("/shapes/count")
-def total_shapes():
-    return len(shapeManager.shapes)
-
-
-@app.get("/shapes/type/{type}")
-def shape_type(type:str):
-    lst = []
-    shapes = shapeManager.get_all_shapes()
-    for shape in shapes:
-        lst.append(shape.shape_type)
-    
-    return lst
-
-
-@app.get("/shapes/{id}")
-def shape_by_id(id:int):
-    for shape in shapeManager.shapes:
-        if shape.id == id:
-            return shape.to_dict()
-        
-    raise HTTPException(status_code=404,detail="the shape not found")
 
 
 
