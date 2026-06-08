@@ -1,19 +1,7 @@
 from fastapi import FastAPI
-import db_connect
+from routers import router
+
 
 app = FastAPI()
 
-@app.post("/setup")
-def run_setup():
-    return {"status": "setup triggered"}
-
-
-@app.get("/schema")
-def get_schema():
-    columns = db_connect.get_schema()
-    return {"columns": columns}
-
-@app.get("/soldiers")
-def get_all_soldiers():
-    return {"soldiers": []}
-
+app.include_router(router, prefix="/soldiers")
