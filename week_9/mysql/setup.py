@@ -1,7 +1,4 @@
 import mysql.connector
-import time
-
-time.sleep(2)
 
 conn = mysql.connector.connect(
     host="localhost",
@@ -22,10 +19,15 @@ CREATE TABLE IF NOT EXISTS soldiers (
 """
 
 cursor = conn.cursor()
-# cursor.execute(create_table_sql) 
-cursor.execute('select * from soldiers')
-print(cursor.fetchall())
+cursor.execute(create_table_sql) 
 conn.commit()
 print("Table created successfully.")
 cursor.close()
 conn.close()
+
+
+
+
+
+
+
