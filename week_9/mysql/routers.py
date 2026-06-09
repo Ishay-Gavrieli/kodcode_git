@@ -1,4 +1,4 @@
-from fastapi import APIRouter,HTTPException
+from fastapi import APIRouter,HTTPException,Query   
 import db
 
 router = APIRouter()
@@ -32,12 +32,13 @@ def create_soldier(name: str, rank: str, unit: str):
     return db.create(name, rank, unit)
     
 
-@router.put("/soldiers/{soldier_id}")
+@router.put("/{soldier_id}")
 def update_soldier(soldier_id:int, data: dict):
     success = db.update(soldier_id, data)
     if not success:
         raise HTTPException(status_code=404, detail="Soldier not found")
     return {"message": "Updated successfully"}
+
 
 
 
@@ -53,3 +54,42 @@ def delete_soldier(soldier_id:int):
 @router.get("/soldiers/unit/{unit_name}")
 def get_soldiers_by_unit(unit_name: str):
     return db.get_by_unit(unit_name)
+
+
+
+@router.get("/active_soldiers")
+def get_active(order: str = "asc"):
+    return db.get_active_sorted(order)
+
+
+
+@router.get("/distinct_units")
+def distinct_units():
+    data = db.get_distinct_units()
+    return data
+
+
+
+@router.get("/not_null")
+def rank_not_null():
+    data = db.not_null()
+    return data
+
+
+
+
+
+
+@router.get("/soldiers")
+def list_soldiers(
+    rank: str | None = Query(default=None),
+    sort: str = Query(default="asc")
+    ):
+    if rank:
+        return {"soldiers": db.get_by_rank(rank)}
+    return {"soldiers": db.get_active_sorted(sort)}
+
+
+@router.get("/soldiers/search")
+def search_soldiers(name: str = Query(...)):
+    return {"soldiers": db.search_by_name(name)}
