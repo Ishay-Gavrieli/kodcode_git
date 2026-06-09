@@ -53,7 +53,8 @@ def update(soldier_id, data: dict) -> bool:
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
     try:
-        cursor.execute("update soldiers set name = %s, `rank` = %s , unit = %s, WHERE id = %s",(data['name'], data['rank'],data["unit"] ,soldier_id))
+        sql = "update soldiers set name = %s, `rank` = %s ,active = %s, unit = %s WHERE id = %s"
+        cursor.execute(sql,(data['name'], data['rank'],data['active'],data['unit'] ,soldier_id))
         conn.commit()
         return cursor.rowcount > 0
     except Exception as e:
@@ -65,8 +66,6 @@ def update(soldier_id, data: dict) -> bool:
     
 
 
-
-
 def delete(soldier_id: int) -> bool :
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
@@ -75,7 +74,7 @@ def delete(soldier_id: int) -> bool :
         conn.commit()
         return cursor.rowcount > 0
     finally:
-        cursor.close()
+        cursor.close()   
         conn.close()
 
 
@@ -101,3 +100,63 @@ def get_schema() -> list:
     return [{"column": row[0], "type": row[1]} for row in rows]
 
 
+
+
+
+
+def get_active_sorted(order: str = "asc") -> list:
+
+    if order.lower() not in ("asc", "desc"):
+        order = "asc"
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+    
+    cursor.execute(f"SELECT * FROM soldiers WHERE active = TRUE ORDER BY name {order.upper()}")
+    rows = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return rows
+
+
+
+
+def get_distinct_units() -> list:
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("select distinct unit from soldiers")
+    result = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return result
+
+
+
+def not_null():
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM soldiers WHERE `rank` IS NOT NULL")
+    result = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return result
+
+
+def get_by_rank(rank: str):
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM soldiers WHERE `rank` = %s", (rank,))
+    result = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return result
+
+
+
+def search_by_name(name:str):
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM soldiers WHERE name LIKE %s",(f"%{name}%",))
+    result = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return result
