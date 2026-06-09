@@ -1,4 +1,8 @@
 import mysql.connector
+import time
+
+time.slepp(2)
+
 
 conn = mysql.connector.connect(
     host="localhost",
