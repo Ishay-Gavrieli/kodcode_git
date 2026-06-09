@@ -25,7 +25,6 @@ def get_all()-> list:
 def get_by_id(soldier_id: int) -> dict | None :
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute("select * from soldiers where id = %s",(soldier_id,))
     try:
         cursor.execute("SELECT * FROM soldiers WHERE id = %s", (soldier_id,))
         result = cursor.fetchone()
