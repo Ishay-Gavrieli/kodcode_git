@@ -19,7 +19,7 @@ class IntelMessagesDAL:
         return mysql.connector.connect(host=self.host, user=self.user, password=self.password, database=self.database, port=3306)
     
     def setup(self) -> None:
-        valid = ", ".join([f"'{c}'" for c in self.VALID_CLASSIFICATIONS])
+        valid = "'unclassified', 'confidential', 'secret', 'top_secret'"
         create_table = f"CREATE TABLE IF NOT EXISTS intel_messages(id INT PRIMARY KEY AUTO_INCREMENT, unit varchar(100), classification ENUM({valid}), content varchar(100))"
         try:
             self.conn = self.get_conn()
